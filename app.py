@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_restful import Api, reqparse  # remember: run activate.bat for venv installation
 from flask_jwt import JWT
@@ -8,7 +10,7 @@ from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db" # create database at the root
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///data.db") # os.environ.get(for HeroKu, fallback local var)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False #turn off Flask's modification tracker and use primary SQLAlchemy's
 app.secret_key = "jose"
 api = Api(app)
