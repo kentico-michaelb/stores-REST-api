@@ -13,11 +13,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False #turn off Flask's modificat
 app.secret_key = "jose"
 api = Api(app)
 
-#leverage SQLAlchemy to create tables before first request
-@app.before_first_request
-def create_tables():
-    db.create_all() # creates tables based upon the imported classes/resources. e.g. from resources.store import Store, StoreList
-
 jwt = JWT(app, authenticate, identity) #/auth created
 
 api.add_resource(Store, "/store/<string:name>")
